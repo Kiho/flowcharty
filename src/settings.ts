@@ -2,11 +2,12 @@ export class FlowchartySettings {
 
   private _node: {
     style: {
-      shape: "circle"|"rect"|"nothing",
+      shape: "circle"|"rect"|"diamond"|"nothing",
       width: number,
       height: number,
       rx: number,
       ry: number,
+      points: string,
       strokeColor: string,
       strokeWidth: number,
       fillColor: string
@@ -26,6 +27,7 @@ export class FlowchartySettings {
       height: 20,
       rx: 5,
       ry: 5,
+      points: "",
       strokeColor: "#000",
       strokeWidth: 2,
       fillColor: "#fff"
@@ -80,7 +82,7 @@ export class FlowchartySettings {
    * get default node shape
    * @returns {"circle" | "rect" | "nothing"}
    */
-  get shape(): "circle"|"rect"|"nothing" {
+  get shape(): "circle"|"rect"|"diamond"|"nothing" {
     return this._node.style.shape;
   }
 
@@ -88,7 +90,7 @@ export class FlowchartySettings {
    * set default node shape
    * @param {"circle" | "rect" | "nothing"} value
    */
-  set shape(value: "circle"|"rect"|"nothing") {
+  set shape(value: "circle"|"rect"|"diamond"|"nothing") {
     this._node.style.shape = value;
   }
 
@@ -158,6 +160,24 @@ export class FlowchartySettings {
    */
   set nodeRY(value: number) {
     this._node.style.ry = value;
+  }
+
+  /**
+   * get default points of poligon(diamond) node
+   * or, get default vertical radius of rounded rect node's corner
+   * @returns {number}
+   */
+  get points(): string {
+    return this._node.style.points;
+  }
+
+  /**
+   * set default points of poligon(diamond) node
+   * or, set default vertical radius of rounded rect node's corner
+   * @param {number} value
+   */
+  set points(value: string) {
+    this._node.style.points = value;
   }
 
   /**

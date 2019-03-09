@@ -4,14 +4,16 @@ import {FlowchartyLink} from "./link";
 import {FlowchartyElements} from "./elements";
 
 export class FlowchartyCanvas {
-
-  private _g: d3.Selection<d3.BaseType, any, d3.BaseType, any>|undefined;
+  // @ts-ignore
+  private _g: d3.Selection<SVGGElement, any, d3.BaseType, any>;
 
   private _widthInterval: number = 0;
 
   private _heightInterval: number = 0;
 
   private _arrowheadIndex: number = 0;
+
+  private _zoomed: any;
 
   /**
    * @param {d3.Selection} _svg
@@ -21,6 +23,7 @@ export class FlowchartyCanvas {
     private _svg: d3.Selection<d3.BaseType, any, d3.BaseType, any>,
     private _elements: FlowchartyElements,
     ) {
+    console.log('Initialize FlowchartyCanvas');
   }
 
   /**
@@ -34,6 +37,14 @@ export class FlowchartyCanvas {
     this.renderNodes();
     this.renderLinks();
     d3.selectAll("._should_remove_element").remove();
+    
+    if (this._zoomed) return;
+    // Set up zoom support
+    this._zoomed = () => this._g.attr("transform", d3.event.transform);
+
+    this._svg.call(<any>d3.zoom()
+      .scaleExtent([1 / 2, 4])
+      .on("zoom", this._zoomed));
   }
 
   /**
@@ -79,6 +90,12 @@ export class FlowchartyCanvas {
         .attr("fill", d => this._elements.getNodeById(d).style.fillColor)
         .attr("stroke", d => this._elements.getNodeById(d).style.strokeColor)
         .attr("stroke-width", d => this._elements.getNodeById(d).style.strokeWidth);
+      enter.append("polygon")
+        .attr("class", d => (this._elements.getNodeById(d).style.shape !== "diamond" ? "_should_remove_element" : ""))
+        .attr("points", d => this._elements.getNodeById(d).style.points)
+        .attr("fill", d => this._elements.getNodeById(d).style.fillColor)
+        .attr("stroke", d => this._elements.getNodeById(d).style.strokeColor)
+        .attr("stroke-width", d => this._elements.getNodeById(d).style.strokeWidth);        
       enter.html(function (d) {
         return d3.select(this).html() + _this.getTextElementsWithLineBreak(_this._elements.getNodeById(d));
       });

@@ -3,13 +3,13 @@ import * as d3 from "d3";
 
 var data = {
   nodes: [
-    {id: 'start', label: {name: 'Which flowchart library should you use?'}, style: {fillColor: '#fff'}},
-    {id: 'manually', label: {name: 'You want to draw manually?'}},
+    {id: 'start', label: {name: 'Which flowchart library should you use?'}, style: {shape: "rect", width: 100, height: 25, rx: 3, ry: 3, fillColor: 'rgb(241, 136, 8)', strokeColor: 'rgb(199, 113, 7)'}},
+    {id: 'manually', label: {name: 'You want to draw manually?'}, style: {shape: "diamond", width: 100, height: 25, fillColor: '#8dcf7c', strokeColor: 'rgb(199, 113, 7)'}},
     {id: 'drawIo', label: {name: '<a href="https://www.draw.io/" target="_blank">draw.io</a>', dx: 0, dy: 0, textAnchor: 'middle'}, style: {shape: "rect", width: 100, height: 25, rx: 3, ry: 3, fillColor: 'rgb(241, 136, 8)', strokeColor: 'rgb(199, 113, 7)'}},
-    {id: 'formal', label: {name: 'You want to draw a relatively formal chart?'}},
-    {id: 'anotherChart', label: {name: 'You want to use not only for flowchart \nbut also another UML?'}},
+    {id: 'formal', label: {name: 'You want to draw a relatively formal chart?'}, style: {shape: "diamond", width: 100, height: 25, fillColor: '#8dcf7c', strokeColor: 'rgb(199, 113, 7)'}},
+    {id: 'anotherChart', label: {name: 'You want to use not only for flowchart \nbut also another UML?'}, style: {shape: "diamond", width: 100, height: 25, fillColor: '#8dcf7c', strokeColor: 'rgb(199, 113, 7)'}},
     {id: 'mermaid', label: {name: '<a href="https://mermaidjs.github.io/" target="_blank">mermaid</a>', dx: 0, dy: 0, textAnchor: 'middle'}, style: {shape: "rect", width: 100, height: 25, rx: 3, ry: 3, fillColor: '#8dcf7c', strokeColor: '#72a964'}},
-    {id: 'module', label: {name: 'You want to use as \n"npm" package.', dx: 10, textAnchor: 'start'}},
+    {id: 'module', label: {name: 'You want to use as \n"npm" package.', dx: 10, textAnchor: 'start'}, style: {shape: "diamond", width: 100, height: 25, fillColor: '#8dcf7c', strokeColor: 'rgb(199, 113, 7)'}},
     {id: 'flowchartJS', label: {name: '<a href="http://flowchart.js.org/" target="_blank">flowchart.js</a>', dx: 0, dy: 0, textAnchor: 'middle'}, style: {shape: "rect", width: 100, height: 25, rx: 3, ry: 3, fillColor: '#2e7bcf', strokeColor: '#275da1'}},
     {id: 'dummyNode1', label: {name: ''}, style: {shape: 'nothing'}},
     {id: 'dummyNode2', label: {name: ''}, style: {shape: 'nothing'}},
@@ -48,6 +48,9 @@ var data = {
     {source: 'maintenance', target: 'flowcharty', style: {strokeWidth: 4, color: '#cf3933'}}
   ]
 };
+
+var rootNode = document.querySelector("svg");
+rootNode.innerHTML = '';
 
 var flowcharty = new Flowcharty();
 flowcharty.nodeRX = 7;

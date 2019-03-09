@@ -63,21 +63,31 @@ export class FlowchartyNode {
 
 export class FlowchartyNodeStyle {
   constructor(
-    private _shape: "circle"|"rect"|"nothing",
+    private _shape: "circle"|"rect"|"diamond"|"nothing",
     private _width: number,
     private _height: number,
     private _rx: number,
     private _ry: number,
+    private _points: string,
     private _strokeColor: string,
     private _strokeWidth: number,
-    private _fillColor: string){
+    private _fillColor: string) {
+      this._points = this.getPoints(_shape, _width, _height, _points);
+  }
+
+  getPoints(shape: "circle"|"rect"|"diamond"|"nothing", width: number, height: number, points: string) {
+    if (shape === 'diamond') {
+      const hw = width / 2, hh = height / 2;
+      points = `0,-${hh} -${hw},0 0,${hh} ${hw},0`;
+    }
+    return points;
   }
 
   /**
    * get shape type
-   * @returns {"circle" | "rect" | "nothing"}
+   * @returns {"circle" | "rect" | "diamond" | "nothing"}
    */
-  get shape(): "circle"|"rect"|"nothing" {
+  get shape(): "circle"|"rect"|"diamond"|"nothing" {
     return this._shape;
   }
 
@@ -113,6 +123,14 @@ export class FlowchartyNodeStyle {
    */
   get ry(): number {
     return this._ry;
+  }
+
+    /**
+   * get color of stroke
+   * @returns {string}
+   */
+  get points(): string {
+    return this._points;
   }
 
   /**
@@ -153,6 +171,9 @@ export class FlowchartyNodeStyle {
     if (this._shape === "rect") {
       return this._width;
     }
+    if (this._shape === "diamond") {
+      return this._width;
+    }
     return 0;
   }
 
@@ -168,6 +189,9 @@ export class FlowchartyNodeStyle {
       return this._ry * 2;
     }
     if (this._shape === "rect") {
+      return this._height;
+    }
+    if (this._shape === "diamond") {
       return this._height;
     }
     return 0;

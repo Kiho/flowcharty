@@ -23,7 +23,7 @@ export default class Flowcharty {
       nodes: {
         id: string,
         style?: {
-          shape?: "circle"|"rect",
+          shape?: "circle"|"rect"|"diamond",
           width?: number,
           height?: number,
           strokeWidth?: number,
@@ -87,7 +87,7 @@ export default class Flowcharty {
    * set default node shape
    * @param {"circle" | "rect" | "nothing"} value
    */
-  set shape(value: "circle"|"rect"|"nothing") {
+  set shape(value: "circle"|"rect"|"diamond"|"nothing") {
     this._settings.shape = value;
   }
 
